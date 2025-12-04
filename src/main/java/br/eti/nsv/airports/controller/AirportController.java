@@ -1,6 +1,7 @@
 
 package br.eti.nsv.airports.controller;
 
+import br.eti.nsv.airports.DTO.AirportMinDTO;
 import br.eti.nsv.airports.entites.Airport;
 import br.eti.nsv.airports.service.AirportService;
 import java.util.List;
@@ -26,6 +27,20 @@ public class AirportController
     public ResponseEntity <List<Airport>> findByCityIgnoreCase(@PathVariable String cityName)
     {
         List<Airport> result = airportService.findByCity(cityName);
+      if (result.isEmpty()){
+          
+          return ResponseEntity.notFound().build();
+          
+      }else{
+          
+          return ResponseEntity.ok(result);
+      }
+        
+    }
+        @GetMapping("/country/{countryName}")
+    public ResponseEntity <List<AirportMinDTO>> findByCountryIgnoreCase(@PathVariable String countryName)
+    {
+        List<AirportMinDTO> result = airportService.findByCountry(countryName);
       if (result.isEmpty()){
           
           return ResponseEntity.notFound().build();
